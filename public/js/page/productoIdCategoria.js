@@ -75,7 +75,8 @@ export default ()=>{
 
         const queries = {
             query : true,
-            id_categoria : params.id_categoria
+            id_categoria : params.id_categoria,
+            status : 1
         }   
 
         datapi.get(api(`/api/producto?${ paramQueries( queries) }`))
