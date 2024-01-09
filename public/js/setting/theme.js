@@ -19,7 +19,7 @@ export default ()=>{
 
     const theme = localStorage.getItem('theme') == 'light' ? themeLight : themeDark
 
-    const settingStyle = document.getElementById('setting-style')
-    settingStyle.innerHTML = `:root {${ Object.keys(theme).map( key => `--${ key } : ${ theme[key] };\n` ).join('') }}`
+    document.getElementById('meta-theme-color').setAttribute('content', theme['color-background'])
+    document.getElementById('setting-style').innerHTML = `:root {${ Object.keys(theme).map( key => `--${ key } : ${ theme[key] };\n` ).join('') }}`
 
 }
