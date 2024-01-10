@@ -38,7 +38,9 @@ export default ()=>{
     `)
 
     const { elementCategoria, elementMarca, elementCategoriaData, elementMarcaData, elementProducto, elementProductoLoad, elementProductoNull, elementProductoData } = ele.object( ElementComponent.querySelectorAll('[id]'), 'id', true )
-                    
+          
+    const observer = new eleObserver()
+
     elementCategoria.addEventListener('click', e => {
         const button = e.target.closest('button')
 
@@ -102,16 +104,39 @@ export default ()=>{
             .then( dataRenderElementMarca )
     }
 
-    const dataRenderElementProductoData =(Data = [])=>{
+    const dataRenderElementProductoData =(Data = [], clear = false)=>{
 
-        elementProductoData.innerHTML = Data.map(data => {
+        if( !Data.length ) return
+        if( clear ) elementProductoData.innerHTML = ''
+
+        elementProductoData.insertAdjacentHTML('beforeend', Data.map(data => {
             return `
                 <a href="#/producto/${ data.id }" class="a_LQ37e49 pointer">
-                    <img src="${ api(`/storage/productos/${ data.img }`) }">
+                    <img src="${ data.img ? api(`/storage/productos/${ data.img }`) : '' }">
                     <p style="font-size:13px">${ data.description }</p>
                 </a>
             `
-        }).join('')
+        }).join(''))
+
+        const children = Array.from(elementProductoData.children).slice(-1)[0]
+
+        if( children ) {
+            observer.set( children, e => {
+                if( e.isIntersecting ) {
+                    observer.remove( children )
+                    const queries = {
+                        query : 3,
+                        query_limit : `${ elementProductoData.children.length }, 50`,
+                        id_categoria : elementCategoria.getAttribute('data-id'),
+                        id_marca : elementMarca.getAttribute('data-id'),
+                    }
+                
+                    fetch(api(`/api/producto?${ paramQueries( queries ) }`))
+                        .then( res => res.json() )
+                        .then( dataRenderElementProductoData )
+                }
+            })
+        }
 
         return elementProductoData
     }
@@ -121,7 +146,7 @@ export default ()=>{
         elementProducto.append(
             Data === 0 ? elementProductoLoad : '',
             Array.isArray(Data) && !Data.length ? elementProductoNull : '',
-            Array.isArray(Data) && Data.length  ? dataRenderElementProductoData( Data ) : ''
+            Array.isArray(Data) && Data.length  ? dataRenderElementProductoData( Data, true ) : ''
         )
         
     }
@@ -130,7 +155,7 @@ export default ()=>{
 
         const queries = {
             query : 3,
-            query_limit : '100',
+            query_limit : '50',
             id_categoria : elementCategoria.getAttribute('data-id'),
             id_marca : elementMarca.getAttribute('data-id'),
         }
@@ -138,6 +163,7 @@ export default ()=>{
         fetch(api(`/api/producto?${ paramQueries( queries ) }`))
             .then( res => res.json() )
             .then( dataRenderElementProducto )
+
     }
 
     dataRenderElementCategoria(0)
