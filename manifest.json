@@ -7,7 +7,6 @@
     "name": "mi local licores",
     "short_name": "ml-licores",
     "description": "manejo y reservas de licores",
-    "orientation": "portrait",
     "icons": [
         {
             "src": "public/img/icon/icon-192x192.png",
