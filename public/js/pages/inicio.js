@@ -1,6 +1,5 @@
 
 export default ()=>{
-
     const api =(uri = '')=> window.dataApp.api + uri
     const paramQueries = (query = {}) => Object.keys(query).map(key => `${ key }=${ query[key] }`).join('&') 
 
@@ -12,15 +11,15 @@ export default ()=>{
             <div class="div_gZrdl0h">             
                 <div class="div_1fG5J8C">
                     <h4>Categoria</h4>
-                    <div id="elementCategoria" class="div_RS2MULC  scroll-x" data-id="null"> 
-                        <button class="button_4M64DUo pointer focus" data-id="null">TODOS</button>
+                    <div id="elementCategoria" class="div_RS2MULC  scroll-x" data-id=""> 
+                        <button class="button_4M64DUo pointer focus" data-id="">TODOS</button>
                         <div id="elementCategoriaData" class="div_RS2MULC"></div>
                     </div>
                 </div>
                 <div class="div_1fG5J8C">
                     <h4>Marca</h4>
-                    <div id="elementMarca" class="div_RS2MULC  scroll-x" data-id="null"> 
-                        <button class="button_4M64DUo pointer focus" data-id="null">TODOS</button>
+                    <div id="elementMarca" class="div_RS2MULC  scroll-x" data-id=""> 
+                        <button class="button_4M64DUo pointer focus" data-id="">TODOS</button>
                         <div id="elementMarcaData" class="div_RS2MULC"></div>
                     </div>
                 </div>
@@ -154,10 +153,11 @@ export default ()=>{
     const dataLoadElementProducto  =()=>{
 
         const queries = {
-            query : 3,
-            query_limit : '50',
+            query : 1,
+            query_limit : 50,
             id_categoria : elementCategoria.getAttribute('data-id'),
             id_marca : elementMarca.getAttribute('data-id'),
+            status : 1
         }
     
         fetch(api(`/api/producto?${ paramQueries( queries ) }`))

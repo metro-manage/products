@@ -22,4 +22,5 @@ export default ()=>{
     document.getElementById('meta-theme-color').setAttribute('content', theme['color-background'])
     document.getElementById('setting-style').innerHTML = `:root {${ Object.keys(theme).map( key => `--${ key } : ${ theme[key] };\n` ).join('') }}`
 
+
 }

@@ -21,8 +21,8 @@ export default ()=>{
                         <div id="elementUser" href="#" class="div_SHt2V05">
                             <img src="${ api(`/storage/user/avatar.png`) }">
                             <div>
-                                <span class="text-ellipsis">publico</span>
-                                <p class="text-ellipsis">-</p>
+                                <span class="text-ellipsis">-</span>
+                                <p class="text-ellipsis">publico</p>
                             </div>
                         </div>
                         <hr>

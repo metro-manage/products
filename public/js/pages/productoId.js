@@ -1,9 +1,11 @@
 export default ( params )=>{
-
     const api =(uri = '')=> window.dataApp.api + uri
     const paramQueries = (query = {}) => Object.keys(query).map(key => `${ key }=${ query[key] }`).join('&')
 
-    const Icon = window.dataApp.icon
+    const Icon      = window.dataApp.icon
+    //const params    = window.dataLib.params
+
+    console.log(params);
 
     const Title = [
         { key : 'img', title : null },
@@ -32,7 +34,7 @@ export default ( params )=>{
                 <div id="elementItemLoad" class="element-loader" style="--color:var(--color-letter)"></div>
                 <div id="elementItemNull" class="div_CgtrSP7">
                     ${ Icon.get('icon-light box-empty') }
-                    <h3>El usuario no existe</h3>
+                    <h3>El producto no existe</h3>
                 </div>
                 <div id="elementItemData" class="div_k10Bfb0"></div>
 
@@ -50,7 +52,7 @@ export default ( params )=>{
     } = ele.object( ElementComponent.querySelectorAll('[id]'), 'id', true )
 
     const dataRenderElementItemData =(data = null)=>{
-
+        
         elementItemData.innerHTML = Title.map( title => {
 
             if( title.key == 'img' ) {
@@ -131,9 +133,10 @@ export default ( params )=>{
 
         const queries = {
             token : localStorage.getItem( 'auth-token' ),
-            query : 2,
+            query : 1,
             id    : params.id,
             query_limit : 'one',
+            status : 1
         }
 
         fetch( api(`/api/producto?${ paramQueries( queries ) }`) )
